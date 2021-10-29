@@ -1,3 +1,10 @@
+from pymongo import MongoClient
+
+client = MongoClient()
+db = client.Playlister
+playlists = db.playlists
+
+
 from flask import Flask
 from flask import render_template
 
