@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+  <form method='POST' action='/playlists'>
+    <fieldset>
+      <legend>New Playlist</legend>
+      <!--information input-->
+      <p>
+        <label for='title'>Title</label><br>
+        <input type='text' name='title'>
+      </p>
+      <p>
+        <label for='description'>Description</label><br>
+        <input type='text' name='description'>
+      </p>
+    </fieldset>
+    <!--Save and submit-->
+    <p>
+      <button type='submit'>Save Playlist</button>
+    </p>
+  </form>
+  {% endblock %}
