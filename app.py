@@ -25,6 +25,12 @@ def playlist_index():
   """Show all playlists"""
   return render_template('playlists_index.html', playlists = playlists)
 
+@app.route('/playlists/<playlist_id>')
+def display_playlist(playlist_id):
+  playlist = playlists.find_one({'_id': ObjectId(playlist_id)})
+  print("the function is called")
+  return render_template('playlists_show.html', playlist = playlist)
+
 @app.route('/playlists/new')
 def playlists_new():
   return render_template('playlists_new.html')
@@ -42,9 +48,8 @@ def playlists_submit():
   playlists.append(playlist)
   return redirect(url_for('playlist_index'))
 
-@app.route('/playlists/<playlist_id>')
-def display_playlist(playlist_id):
-  return print(f"my ID is: {playlist_id}")
+
 
 if __name__ == "__main__":
   app.run(debug=True)
+  
