@@ -30,9 +30,31 @@ def display_playlist(playlist_id):
   playlist = playlists.find_one({'_id': ObjectId(playlist_id)})
   return render_template('playlists_show.html', playlist = playlist)
 
+@app.route('/playlists/<playlist_id>/edit')
+def playlist_editor(playlist_id):
+  playlist = playlists.find_one({'_id': ObjectId(playlist_id)})
+  return render_template('playlists_edit.html', playlist=playlist, title="Edit Playlist")
+
+@app.route('/playlists/<playlist_id>', methods=['POST'])
+def update_playlist(playlist_id):
+  video_ids = request.form.get('video_ids').split()
+  videos = video_url_creator(video_ids)
+  updated_playlist = {
+    'title': request.form.get('title'),
+    'description': request.form.get('description'),
+    'videos': videos,
+    'video_ids': video_ids
+    }
+  playlists.update_one(
+    {'_id': ObjectId(playlist_id)},
+    {'$set': updated_playlist})
+  return redirect(url_for('display_playlist', playlist_id=playlist_id))
+  
+
 @app.route('/playlists/new')
 def playlists_new():
-  return render_template('playlists_new.html')
+  playlist = {}
+  return render_template('playlists_new.html', playlist=playlist,title="New Playlist")
 
 @app.route('/playlists', methods=['POST'])
 def playlists_submit():
@@ -44,9 +66,8 @@ def playlists_submit():
     'videos': videos,
     'video_ids': video_ids
   }
-  #change to insert_one()
   playlists.insert_one(playlist)
-  return redirect(url_for('playlist_index'))
+  return render_template('playlists_show.html', playlist = playlist)
 
 
 
