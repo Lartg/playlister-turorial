@@ -69,7 +69,10 @@ def playlists_submit():
   playlists.insert_one(playlist)
   return render_template('playlists_show.html', playlist = playlist)
 
-
+@app.route('/playlists/<playlist_id>/delete', methods=['POST'])
+def delete_playlist(playlist_id):
+  playlists.delete_one({'_id': ObjectId(playlist_id)})
+  return redirect(url_for('playlist_index'))
 
 if __name__ == "__main__":
   app.run(debug=True)
