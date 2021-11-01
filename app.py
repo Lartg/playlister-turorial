@@ -10,10 +10,6 @@ from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
 
-# playlists = [
-#   {'title': 'Chess Videos', 'description': 'Top games from TCEC'},
-#   {'title': 'chill vibes', 'description': 'Resonance'}
-# ]
 def video_url_creator(id_list):
   videos = []
   for vid_id in id_list:
